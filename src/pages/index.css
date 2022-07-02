@@ -1,0 +1,15 @@
+.container {
+    grid-template-columns: 25% 75%;
+
+    @media screen and (max-width: 720px) and (max-width: 1080px) {
+        grid-template-columns: 35% 65%;
+    }
+
+    @media screen and (max-width: 360px) and (max-width: 480px) {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+.chatContainer {
+    grid-template-rows: 10% 75% 15%;
+}
