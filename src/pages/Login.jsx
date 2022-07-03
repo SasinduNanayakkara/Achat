@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import {Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
 import {loginRoute} from "../utils/APIRoutes"
+import logo from "../asserts/chatX.png"
 import {ToastContainer, toast} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { useState } from 'react';
@@ -85,8 +86,7 @@ const Login = () => {
         <div className='h-screen w-full  flex flex-col justify-center gap-4 items-center bg-gray-700'>
             <form onSubmit={(event) => handleSubmit(event)} className='flex flex-col gap-8 bg-slate-500 rounded-lg p-20'>
                 <div className='flex items-center gap-4 justify-center'>
-                    <img src="" className='h-20' alt="" />
-                    <h1 className='text-white'>Chat</h1>
+                    <img src={logo} className='h-20' alt="" />
                 </div>
                 <input type="text" onChange={(e) => handleChange(e)} placeholder='Username' name='username' className="bg-transparent p-4 border-2 border-transparent rounded-lg text-white w-full text-base focus:border-2 focus:border-slate-700 focus:outline-none" />
                 <input type="password" onChange={(e) => handleChange(e)} placeholder='Password' name='password' className="bg-transparent p-4 border-2 border-transparent rounded-lg text-white w-full text-base focus:border-2 focus:border-slate-700 focus:outline-none" />
