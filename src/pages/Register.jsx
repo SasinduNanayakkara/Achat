@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { registerRoute } from '../utils/APIRoutes';
+import logo from "../asserts/chatX.png"
 const  Register = () => {
 
     const navigate = useNavigate();
@@ -103,8 +104,7 @@ const  Register = () => {
         <div className='h-screen w-full  flex flex-col justify-center gap-4 items-center bg-gray-700'>
         <form onSubmit={(event) => handleSubmit(event)} className='flex flex-col gap-8 bg-gray-600 rounded-3xl px-20 py-12'>
             <div className='flex items-center gap-4 justify-center'>
-                <img src="" alt="" className='h-20'/>
-                <h1 className='text-white'>Chat</h1>
+                <img src={logo} alt="" className='h-20'/>
             </div>
             <input type="text" placeholder='Username' name='username' onChange={(e) => handleChange(e)} className='bg-transparent text-white p-4 rounded-sm w-full text-base focus:border-1 focus:border-slate-500 outline-none' />
             <input type="email" placeholder='Email' name='email' onChange={(e) => handleChange(e)} className='bg-transparent text-white p-4 border-1 rounded-sm w-full text-base focus:border-1 focus:border-slate-500 outline-none' />
