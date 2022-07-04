@@ -27,7 +27,7 @@ const ChatInput = ({handleSendMsg}) => {
     }
 
   return (
-    <div className=' grid items-center bg-slate-700 mx-5 px-1 msgInputContainer rounded-full'>
+    <div className='chatInput grid items-center bg-slate-700 mx-5 px-1 msgInputContainer rounded-full'>
         <div className="relative flex items-center px-2 pt-1 text-white gap-4">
             <div className="relative">
             <BsEmojiSmileFill onClick={handleEmojiPickerHideShow} className='text-3xl text-amber-400 cursor-pointer'/>
@@ -36,7 +36,7 @@ const ChatInput = ({handleSendMsg}) => {
         </div>
     <form onSubmit={(e) => sendChat(e)} className='w-full rounded-md flex content-center gap-8 bg-slate-700'>
         <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} className='w-5/6 h-3/5 pt-2 text-white bg-transparent border-none pl-6 text-lg selection:bg-slate-400 focus:outline-none' placeholder='Type Message' id="" />
-        <button type="submit" className='py-3 px-7 rounded-full gap-4 flex justify-center items-center bg-amber-500 border-none'>
+        <button type="submit" className='send-btn py-3 px-7 rounded-full gap-4 flex justify-center items-center bg-amber-500 border-none'>
             <IoMdSend className='text-xl text-black'/>
         </button>
     </form>
