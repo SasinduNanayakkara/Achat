@@ -61,3 +61,17 @@ p {
 
     }
 }
+
+.send-btn {
+    @media screen and (max-width: 720px) and (max-width: 1080px) {
+        padding: 0.3rem 1rem;
+    }
+}
+
+.chatInput {
+    
+    @media screen and (max-width: 720px) and (max-width: 1080px) {
+        padding: 0 1rem;
+        gap: 1rem;
+    }
+}
