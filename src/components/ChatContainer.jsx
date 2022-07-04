@@ -1,25 +1,26 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import ChatInput from './ChatInput';
 import Logout from './Logout';
-import Messages from './Messages';
 import "../pages/index.css"
 import { getMessagesRoute, sendMessageRoute } from '../utils/APIRoutes';
+import {v4 as uuidv4} from "uuid";
 
-const ChatContainer =  ({currentChat, currentUser}) =>  {
+const ChatContainer =  ({currentChat, currentUser, socket}) =>  {
 
-    const [messages, setMEssages] = useState([]);
+    const scrollRef = useRef();
+    const [messages, setMessages] = useState([]);
+    const [arrivalMsg, setArrivalMsg] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await axios.post(getMessagesRoute, {
-                from: currentUser._id,
-                to: currentChat._id,
-            });
-            setMEssages(res.data);
-            console.log("messageData " + res.data);
-            console.log("currentUser " + currentUser._id);
-            console.log("currentChat " + currentChat._id);
+            if(currentChat) {
+                const res = await axios.post(getMessagesRoute, {
+                    from: currentUser._id,
+                    to: currentChat._id,
+                });
+                setMessages(res.data);
+            }
         }
         fetchData();
     }, [currentChat, currentUser]);
@@ -31,8 +32,35 @@ const ChatContainer =  ({currentChat, currentUser}) =>  {
             from: currentUser._id,
             to: currentChat._id,
             message: msg,
-        })
+        });
+
+        socket.current.emit("send-msg", {
+            to: currentChat._id,
+            from: currentUser._id,
+            message: msg,
+        });
+
+        const msgs = [...messages];
+        msgs.push({fromSelf: true, message: msg});
+        setMessages(msgs);
     }
+
+    useEffect(() => {
+        if(socket.current) {
+            socket.current.on("msg-received", (msg) => {
+                setArrivalMsg({fromSelf: false, message: msg});
+            });
+        }
+    },[socket]);
+
+    useEffect(() => {
+        arrivalMsg && setMessages((prev) => [...prev, arrivalMsg]);
+    }, [arrivalMsg]);
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, [messages]);
+
   return (
     <>
     {
@@ -52,11 +80,11 @@ const ChatContainer =  ({currentChat, currentUser}) =>  {
             </div>
             <Logout/>
         </div>
-        <div className="py-2 px-8 flex flex-col gap-2 overflow-auto">
+        <div className="py-2 px-8 flex flex-col gap-2 overflow-auto chat-msg">
             {
                 messages.map(messages => {
                     return (
-                        <div>
+                        <div ref={scrollRef} key={uuidv4()}>
                             <div className={`flex items-center ${messages.fromSelf ? "justify-end bg-slate-400 send": "justify-start bg-gray-500 received"}`}>
                                 <div className="max-w-sm break-words p-4 text-base rounded-lg text-white content">
                                     <p>
